@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class MaxGap {
+    public static int findMaxGap(int[] A, int n) {
+        // write code here
+        int ret = 0;
+        for(int k = 0; k < n - 1;k++) {
+            int max = 0;
+            int[] arr1 = sort(A,0,k);
+            int[] arr2 = sort(A,k + 1,n - 1);
+            max = arr1[k] - arr2[n- k - 2];
+            if(max < 0) {
+                max = -max;
+            }
+            if(ret < max) {
+                ret = max;
+            }
+        }
+        return ret;
+    }
+    public static int[] sort(int[] arr,int startIndex,int endIndex) {
+        int[] a = new int[endIndex - startIndex + 1];
+        int k = 0;
+        for (int i = startIndex;i <= endIndex;i++) {
+            a[k++] = arr[i];
+        }
+        for(int i = startIndex; i <= endIndex;i++) {
+            for(int j = 0; j < endIndex - i ;j++) {
+                if(a[j] > a[j +1]) {
+                    int tmp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = tmp;
+                }
+            }
+        }
+        return a;
+    }
+}
