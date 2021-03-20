@@ -1,0 +1,40 @@
+import java.util.*;
+
+public class Printer {
+    public int[] clockwisePrint(int[][] mat, int n, int m) {
+        // write code here
+        int[] arr = new int[n * m];
+        int k = 0;
+        int startX = 0;
+        int startY = 0; 
+        int endX = n - 1;
+        int endY = m - 1;
+        while(startX <= endX && (startY <= endY)) {
+            if(startY <= endY) {
+                for(int i = startY;i <= endY;i++) {
+                    arr[k++] = mat[startX][i];
+                }
+            }
+            if(startX < endX) {
+                for(int i = startX + 1;i <= endX;i++) {
+                    arr[k++] = mat[i][endY];
+                }
+            }
+            if(endY > startY && endX > startX){
+                for(int i = endY - 1;i >= startY;i--) {
+                    arr[k++] = mat[endX][i];
+                }
+            }
+            if(endX > startX && endY > startY){
+                for(int i = endX - 1;i >= startX + 1;i--) {
+                    arr[k++] = mat[i][startX];
+                }
+            }
+            startX++;
+            endX--;
+            startY++;
+            endY--;
+        }
+        return arr;
+    }
+}
