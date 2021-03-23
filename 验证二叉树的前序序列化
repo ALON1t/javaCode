@@ -1,0 +1,26 @@
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        String[] str = preorder.split(",");
+        Stack<Integer> stack = new Stack<>();
+        stack.push(1);
+        for (int i = 0; i < str.length;i++) {
+            if(stack.isEmpty()) {
+                return false;
+            }else if(str[i].equals("#")) {
+                int top = stack.pop() - 1;
+                if(top > 0) {
+                    stack.push(top);
+                }
+            } else {
+                int top = stack.pop() - 1;
+                if(top > 0) {
+                    stack.push(top);
+                }
+                stack.push(2);
+
+            }
+        }
+        //若栈为空，说明没有待填充的槽位，因此是一个合法序列；否则若栈不为空，则序列不合法
+        return stack.isEmpty();
+    }
+}
