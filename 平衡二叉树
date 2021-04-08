@@ -1,0 +1,27 @@
+import java.util.*;
+public class Solution {
+    public boolean IsBalanced_Solution(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+       int leftH = hight(root.left);
+       int rightH = hight(root.right);
+       int h = leftH - rightH;
+        if((h >= 0 && h < 2) || (h <= 0 && h > -2)) { //左右子树的高度差不超过1
+            return true;
+        } else return false;
+    }
+    public int hight(TreeNode root) { //求树高度
+        int hight = 0;
+        if(root == null) {
+            return 0;
+        } else if(root.left == null && root.right == null) {
+            return 1;
+        } else {
+            int leftS = hight(root.left);
+            int rigthS = hight(root.right);
+            hight = Math.max(leftS,rigthS) + 1;
+        }
+        return hight;
+    }
+}
