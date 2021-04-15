@@ -1,0 +1,24 @@
+public static void  mostLong(String str) {
+        char[] chars = str.toCharArray();
+        int count = 0;
+        String ret = "";
+        for(int i = 0; i < chars.length; i++) {
+            if(chars[i] >= '0' && chars[i] <= '9') {
+                count = 1;
+                int indexI = i;
+                int indexJ = i;
+                for(int j = i+1; j < chars.length; j++) {
+                    if(chars[j] >= '0' && chars[j] <= '9') {
+                        count++;
+                        indexJ = j;
+                    } else {
+                        break;
+                    }
+                }
+                if(count > ret.length()) {
+                    ret = str.substring(indexI,indexJ + 1);
+                }
+            }
+        }
+        System.out.println(ret);
+    } 
