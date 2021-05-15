@@ -1,0 +1,19 @@
+class Solution {
+    public int numJewelsInStones(String jewels, String stones) {
+        //把宝石集合构成一个set
+        Set<Character> set = new HashSet<>();
+        char[] jChars = jewels.toCharArray();
+        for(char j : jChars) {
+            set.add(j);
+        }
+        //遍历手中的石头，判断是不是宝石
+        int count = 0;
+        char[] sChars = stones.toCharArray();
+        for(char s : sChars) {
+            if(set.contains(s)) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
