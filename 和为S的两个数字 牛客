@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+public class Solution {
+    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
+        int startIndex = 0; 
+        int endIndex = array.length - 1;
+        int min = 0;
+        int count = 0;
+        int l1 = -1;
+        int l2 = -1;
+        ArrayList<Integer> list = new ArrayList<>();
+        while(startIndex < endIndex) {
+            if(array[startIndex] + array[endIndex] == sum) {
+                count++;
+                int mul = array[startIndex] * array[endIndex];
+                if(count == 1) {
+                    min = mul;
+                    l1 = startIndex;
+                    l2 = endIndex;
+                } else {
+                    if(mul < min) {
+                        min = mul;
+                        l1 = startIndex;
+                        l2 = endIndex;
+                    }
+                }
+                startIndex++;
+                endIndex--;
+            } 
+            if(array[startIndex] + array[endIndex] < sum){
+                startIndex++;
+            } 
+            if(array[startIndex] + array[endIndex] > sum) { //>
+                endIndex--;
+            }
+        }
+        if(l1 == -1 || l2 == -1) {
+            return list;
+        } else {
+            list.add(array[l1]);
+            list.add(array[l2]);
+        }
+        return list;
+    }
+}
