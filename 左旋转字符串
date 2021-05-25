@@ -1,0 +1,35 @@
+import java.util.*;
+public class Solution {
+    public String LeftRotateString(String str,int n) {
+        if(str.length() == 0) return "";
+        if(n % str.length() == 0) return str;
+        char[] chars = str.toCharArray();
+        int tmp = n;
+        if(tmp > str.length()) {
+            tmp = tmp % str.length();
+        }
+        char[] ch = new char[n];
+        int j = 0;
+        for(int i = 0; i < str.length();i++) {
+            while(i != tmp) {
+                ch[i] = chars[i];
+                i++;
+            }
+            for(; j < str.length();j++) {
+                chars[j] = chars[i];
+                i++;
+                if (i == str.length()) {
+                    break;
+                }
+            }
+        }
+        int k = 0;
+        j++;
+        for (;j < str.length();j++) {
+            chars[j] = ch[k];
+            k++;
+        }
+        String s = String.valueOf(chars);
+        return s;
+    }
+}
