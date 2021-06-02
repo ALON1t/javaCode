@@ -1,0 +1,81 @@
+public static void quickSort(long[] arr) {
+        quickSortInternal(arr,0,arr.length - 1);
+    }
+    private static void quickSortInternal(long[] arr,int lowIndex,int highIndex) {
+        //区间：[lowIndex,highIndex]
+        int size = highIndex - lowIndex + 1;
+        if(size <= 1) {
+            return;
+        }
+        //每次选择最左边的数执行partition操作
+        //keyIndex是经过partition后选出来的数最终所在下标
+        int keyIndex = partition(arr,lowIndex,highIndex);
+        //分别对左右区间进行相同处理（递归）
+        quickSortInternal(arr,lowIndex,highIndex - 1);
+        quickSortInternal(arr,keyIndex + 1,highIndex);
+    }
+
+    private static int partition(long[] arr,int lowIndex,int highIndex){
+        //区间：[lowIndex,highIndex]
+        //选择arr[lowIndex]作为基准值
+        //需要遍历整个区间和选出来的数进行比较，小于等于的在左边，让大于等于的在右边（无顺序要求）
+        return partitionHover(arr,lowIndex,highIndex);
+        //return partition挖坑法(arr,lowIndex,highIndex);//较快
+        //return partition前后遍历法(arr,lowIndex,highIndex);
+    }
+    //法一
+    private static int partitionHover(long[] arr, int lowIndex, int highIndex) {
+        int leftIndex = lowIndex;
+        int rightIndex = highIndex;
+        long key = arr[lowIndex];
+        // 选择最左边的数，让右边的先走
+        // 停止条件：leftIndex == rightIndex
+        // 循环条件：leftIndex < rightIndex
+        while (leftIndex < rightIndex) {
+            while (leftIndex < rightIndex && arr[rightIndex] >= key) {
+                rightIndex--;
+            }
+            //[rightIndex] 遇到了小的
+            while (leftIndex < rightIndex && arr[leftIndex] <= key) {
+                leftIndex++;
+            }
+            //[leftIndex] 遇到了大的
+            swap(arr, leftIndex, rightIndex);//交换位置
+        }
+        swap(arr, lowIndex, leftIndex);
+        return leftIndex;
+    }
+
+    //法二 （较重要）
+    private static int partition挖坑法(long[] arr,int lowIndex,int highIndex) {
+        int leftIndex = lowIndex;
+        int rightIndex = highIndex;
+        long key = arr[lowIndex];
+        while(leftIndex < rightIndex) {
+            while(leftIndex < rightIndex && arr[rightIndex] >= key) {
+                rightIndex--;
+            }
+            arr[leftIndex] = arr[rightIndex];
+            while(leftIndex < rightIndex && arr[leftIndex] <= key) {
+                leftIndex++;
+            }
+            arr[rightIndex] = arr[leftIndex];
+        }
+        arr[leftIndex] = key;
+        return leftIndex;
+
+    }
+    //法三
+    private static int partition前后遍历法(long[] arr,int lowIndex,int highIndex) {
+        int separateIndex = lowIndex + 1; //分割
+        //保证
+        for(int i = lowIndex + 1;i <= highIndex; i++) {
+            if(arr[i] < arr[lowIndex]) {//小于时交换位置
+                swap(arr,i,separateIndex);
+                separateIndex++;
+            }
+        }
+        swap(arr,lowIndex,separateIndex - 1);
+        return separateIndex - 1;
+    }
+
